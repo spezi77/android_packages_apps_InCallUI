@@ -28,6 +28,7 @@ import android.os.PowerManager;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.view.IWindowManager;
+import android.content.ActivityNotFoundException;
 
 import com.android.services.telephony.common.Call;
 import com.android.services.telephony.common.Call.Capabilities;
@@ -64,6 +65,7 @@ public class InCallPresenter implements CallList.Listener {
     private ProximitySensor mProximitySensor;
     private boolean mServiceConnected = false;
     private boolean mCallUiInBackground = false;
+    private static String LOG_TAG = "InCallPresenter";
 
     /**
      * Is true when the activity has been previously started. Some code needs to know not just if
@@ -788,6 +790,26 @@ public class InCallPresenter implements CallList.Listener {
         }
 
         return intent;
+    }
+
+    public void sendAddParticipantIntent() {
+        Intent intent = new Intent(Intent.ACTION_DIAL);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        // when we request the dialer come up, we also want to inform
+        // it that we're going through the "add participant" option from the
+        // InCallScreen.
+        intent.putExtra(InCallApp.ADD_CALL_MODE_KEY, true);
+        intent.putExtra(InCallApp.ADD_PARTICIPANT_KEY, true);
+        try {
+            mContext.startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            // This is rather rare but possible.
+            // Note: this method is used even when the phone is encrypted. At
+            // that moment
+            // the system may not find any Activity which can accept this Intent
+            Log.e(LOG_TAG, "Activity for adding calls isn't found.");
+        }
     }
 
     /**
