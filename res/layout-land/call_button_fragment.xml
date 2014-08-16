@@ -85,7 +85,20 @@
 
 
         <!-- Separator between 4th (or 5th) button and right padding -->
-        <View style="@style/VerticalSeparator" />
+        <View android:id="@+id/blacklistSpacer"
+              style="@style/VerticalSeparator" />
+
+        <com.android.incallui.CallRecordingButton
+                     android:id="@+id/recordButton"
+                     style="@style/InCallButton"
+                     android:src="@drawable/ic_record_holo_dark"
+                     android:contentDescription="@string/onscreenRecordText"
+                     android:visibility="gone"
+                     />
+
+        <View android:id="@+id/recordSpacer"
+              style="@style/VerticalSeparator"
+              android:visibility="gone" />
 
         <!-- This slot is either "Add" or "Merge", depending on
              the state of the call.  One or the other of these

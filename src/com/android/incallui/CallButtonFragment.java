@@ -57,6 +57,7 @@ public class CallButtonFragment
     private View mExtraRowButton;
     private View mManageConferenceButton;
     private View mGenericMergeButton;
+    private View mRecordSpacer;
 
     @Override
     CallButtonPresenter createPresenter() {
@@ -145,7 +146,7 @@ public class CallButtonFragment
         mSwapButton.setOnClickListener(this);
 
         mRecordButton = (CallRecordingButton) parent.findViewById(R.id.recordButton);
-        mRecordButton.setOnClickListener(mRecordButton);
+        mRecordSpacer = parent.findViewById(R.id.recordSpacer);
 
         return parent;
     }
@@ -250,6 +251,7 @@ public class CallButtonFragment
     @Override
     public void showRecording(boolean show) {
         mRecordButton.setVisibility(show ? View.VISIBLE : View.GONE);
+        mRecordSpacer.setVisibility(show ? View.VISIBLE : View.GONE);
     }
 
     @Override

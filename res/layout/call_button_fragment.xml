@@ -170,6 +170,11 @@
         <View android:id="@+id/blacklistSpacer"
               style="@style/VerticalSeparator" />
 
+
+        <View android:id="@+id/recordSpacer"
+              style="@style/VerticalSeparator"
+              android:visibility="gone" />
+
         <com.android.incallui.CallRecordingButton
                      android:id="@+id/recordButton"
                      style="@style/InCallButton"
