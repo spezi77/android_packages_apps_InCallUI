@@ -79,13 +79,6 @@ public class InCallActivity extends Activity {
         UNKNOWN, SWITCH, SEPARATE, TRANSFER, CONFERENCE, REJECT, HANGUP;
     }
 
-    private ContentObserver mSettingsObserver = new ContentObserver(new Handler()) {
-        @Override
-        public void onChange(boolean selfChange, Uri uri) {
-            updateSettings();
-        }
-    };
-
     @Override
     protected void onCreate(Bundle icicle) {
         Log.d(this, "onCreate()...  this = " + this);
@@ -114,12 +107,6 @@ public class InCallActivity extends Activity {
         setContentView(R.layout.incall_screen);
 
         initializeInCall();
-
-        getContentResolver().registerContentObserver(
-                Settings.System.getUriFor(Settings.System.INCOMING_CALL_STYLE),
-                false, mSettingsObserver);
-        updateSettings();
-
         Log.d(this, "onCreate(): exit");
     }
 
@@ -821,17 +808,6 @@ public class InCallActivity extends Activity {
     private void onDialogDismissed() {
         mDialog = null;
         InCallPresenter.getInstance().onDismissDialog();
-    }
-
-    private void updateSettings() {
-        int incomingCallStyle = Settings.System.getInt(getContentResolver(),
-                Settings.System.INCOMING_CALL_STYLE,
-                Settings.System.INCOMING_CALL_STYLE_FULLSCREEN_PHOTO);
-        mUseFullScreenCallerPhoto =
-                incomingCallStyle == Settings.System.INCOMING_CALL_STYLE_FULLSCREEN_PHOTO;
-        mCallButtonFragment.setHideMode(mUseFullScreenCallerPhoto ? View.GONE : View.INVISIBLE);
-        mCallButtonFragment.getPresenter().setShowButtonsIfIdle(!mUseFullScreenCallerPhoto);
-        updateSystemBarTranslucency();
     }
 
     private void log(String msg) {
