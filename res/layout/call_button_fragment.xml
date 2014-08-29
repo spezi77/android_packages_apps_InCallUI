@@ -166,8 +166,20 @@
                      android:visibility="gone"
                 />
 
-        <!-- Separator between 4th (or 5th) button and right padding -->
-        <View style="@style/VerticalSeparator"/>
+        <!-- Separator between 3rd (or 4th) and 4th (or 6th) button -->
+        <View android:id="@+id/blacklistSpacer"
+              style="@style/VerticalSeparator" />
+
+        <com.android.incallui.CallRecordingButton
+                     android:id="@+id/recordButton"
+                     style="@style/InCallButton"
+                     android:src="@drawable/ic_record_holo_dark"
+                     android:contentDescription="@string/onscreenRecordText"
+                     android:visibility="gone"
+                />
+
+        <!-- Separator between 5th (or 6th) button and right padding -->
+        <View style="@style/VerticalSeparator" />
 
     </LinearLayout>
 
